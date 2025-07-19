@@ -1,0 +1,29 @@
+<!-- Connect Base -->
+{% extends 'base.html' %}
+
+<!-- Title -->
+{% block title %}Home{% endblock title %}
+
+<!-- Home Body -->
+{% block body %}
+<div id="home_container">
+  <img
+    src="{{url_for('static',filename='images/main_img_1.png')}}"
+    alt="User Interacting"
+    id="main_img"
+  />
+  <div id="content">
+    <h1>Why Guess?</h1>
+    <h2>Predict Your Loan Fate.</h2>
+    <p>
+      Take the uncertainty out of your loan application journey. Our AI-powered prediction system
+      analyzes your profile and delivers instant, reliable insights—so you know where you stand
+      before you even apply. Whether you're a lender or an applicant, make decisions with
+      confidence.
+    </p>
+    <form action="/input">
+      <button type="submit">Get Started</button>
+    </form>
+  </div>
+</div>
+{% endblock body %}
