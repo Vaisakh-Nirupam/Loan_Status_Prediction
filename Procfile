@@ -1,0 +1,1 @@
+web: gunicorn Loan_Status_App:app
