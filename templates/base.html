@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loan Status {% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/base.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/responsive.css')}}" />
+    <link
+      rel="shortcut icon"
+      href="{{url_for('static',filename='images/Loan_Status_Logo.png')}}"
+      type="image/x-icon"
+    />
+  </head>
+  <body>
+    <div id="navbar">
+      <div id="logo">
+        <h1>Loan Status Prediction</h1>
+      </div>
+      <div id="pages">
+        <a href="/" class="{% if active=='home' %}active{% endif %}">Home</a>
+        <a href="/input" class="{% if active=='predict' %}active{% endif %}">Predict</a>
+        <a href="/about" class="{% if active=='about' %}active{% endif %}">About</a>
+      </div>
+    </div>
+    <div id="navline">
+      <hr />
+    </div>
+    <div id="container">{% block body %}{% endblock body %}</div>
+    <script src="{{url_for('static',filename='js/base.js')}}"></script>
+  </body>
+</html>
