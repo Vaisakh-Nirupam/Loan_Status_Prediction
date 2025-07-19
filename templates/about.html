@@ -1,0 +1,68 @@
+<!-- Connect Base -->
+{% extends 'base.html' %}
+
+<!-- Title -->
+{% block title %}About{% endblock title %}
+
+<!-- Home Body -->
+{% block body %}
+<div id="about">
+  <h1>About</h1>
+  <hr />
+  <div id="about_col">
+    <!-- Socials -->
+    <div id="socials">
+      <div id="social_links">
+        <h2>Socials</h2>
+        <a class="button_a_tag" target="_blank" href="https://www.linkedin.com/in/vaisakh-nirupam"
+          >LinkedIn
+        </a>
+        <a class="button_a_tag" target="_blank" href="https://github.com/Vaisakh-Nirupam">GitHub</a>
+        <button type="submit" id="send_message" form="contact_me">Send</button>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Contact -->
+    <form method="POST" action="/about" id="contact_me">
+      <div id="contact">
+        <h2>Send a Message</h2>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Your name"
+          required
+          minlength="3"
+          maxlength="50"
+        />
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Your email"
+          required
+          maxlength="50"
+        />
+        <input
+          type="text"
+          name="message"
+          id="message"
+          placeholder="Your message"
+          required
+          minlength="15"
+          maxlength="250"
+        />
+        <button type="submit" id="send_message_mobile" class="button_a_tag">Send</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for
+  category, message in messages %}
+  <div id="flash" class="flash flash_{{ category }}">{{ message }}</div>
+  {% endfor %} {% endif %} {% endwith %}
+</div>
+{% endblock body %}
