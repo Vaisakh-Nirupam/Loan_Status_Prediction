@@ -1,0 +1,71 @@
+<!-- Connect Base -->
+{% extends 'base.html' %}
+
+<!-- Title -->
+{% block title %}Prediction{% endblock title %}
+
+<!-- Body -->
+{% block body %}
+<div id="prediction_container">
+  <h1>Loan Prediction</h1>
+  <hr />
+  <div id="pred_box">
+    <div id="pred_images">
+      {% if prediction <= 25 %}
+      <img src="{{url_for('static',filename='images/loan_rejected.jpg')}}" alt="Low Probability" />
+      {% elif prediction <= 50 %}
+      <img
+        src="{{url_for('static',filename='images/loan_below_average.png')}}"
+        alt="Below Average Probability"
+      />
+      {% elif prediction <= 75 %}
+      <img
+        src="{{url_for('static',filename='images/loan_average.png')}}"
+        alt="Average Probability"
+      />
+      {% elif prediction <= 100 %}
+      <img src="{{url_for('static',filename='images/loan_approved.png')}}" alt="High Probability" />
+      {% endif %}
+    </div>
+
+    <div id="pred_message">
+      <h2>Hi {{ name }},</h2>
+
+      {% if prediction <= 25 %}
+      <p>
+        We're sorry to inform you that based on the current data, your loan approval probability is
+        quite low.
+      </p>
+      <p>
+        There might be issues related to credit history, income, or loan defaults that are affecting
+        the prediction.
+      </p>
+      <div><strong>Approval Probability:</strong> {{ prediction }}%</div>
+
+      {% elif prediction <= 50 %}
+      <p>
+        Your loan approval chances are below average. It's not a complete rejection, but the risk
+        factors are slightly higher.
+      </p>
+      <p>Consider improving your credit score or reducing existing debts before applying again.</p>
+      <div><strong>Approval Probability:</strong> {{ prediction }}%</div>
+
+      {% elif prediction <= 75 %}
+      <p>You have a moderate chance of loan approval.</p>
+      <p>Try strengthening your financial profile to increase your chances even more.</p>
+      <div><strong>Approval Probability:</strong> {{ prediction }}%</div>
+
+      {% elif prediction <= 100 %}
+      <p>Congratulations! You have a high probability of loan approval.</p>
+      <p>Your financial background looks strong and aligns well with the loan criteria.</p>
+      <div><strong>Approval Probability:</strong> {{ prediction }}%</div>
+
+      {% endif %}
+
+      <form action="/">
+        <button>Back to Home</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock body %}
