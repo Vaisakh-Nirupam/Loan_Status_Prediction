@@ -12,7 +12,6 @@ from dotenv import load_dotenv
 import os
 
 
-
 # Model Import
 with open('model/Loan_Status_Model.pkl','rb') as f:
     model_dict = pickle.load(f)
@@ -52,13 +51,12 @@ def input():
             session['name'] = request.form.get('name')
             session['age'] = request.form.get('age')
             session['gender'] = request.form.get('gender')
-            session['education'] = request.form.get('education')
             return redirect(url_for('input', show=2))
         
         elif show == 2:
+            session['education'] = request.form.get('education')
             session['income'] = request.form.get('income')
             session['experience'] = request.form.get('experience')
-            session['home_ownership'] = request.form.get('home_ownership')
             return redirect(url_for('input', show=3))
         
         elif show == 3:
@@ -68,9 +66,9 @@ def input():
             return redirect(url_for('input', show=4))
 
         elif show == 4:
+            session['home_ownership'] = request.form.get('home_ownership')
             session['credit_history'] = request.form.get('credit_history')
             session['credit_score'] = request.form.get('credit_score')
-            session['loan_defaults'] = request.form.get('loan_defaults')
 
             inputs = [
                 int(session['age']),
@@ -84,12 +82,10 @@ def input():
                 int(session['interest']),
                 int(session['credit_history']),
                 int(session['credit_score']),
-                session['loan_defaults']
             ]
 
             cols = ['age', 'gender', 'education', 'income', 'experience', 'home_ownership',
-                    'loan_amount', 'loan_intent', 'loan_int_rate', 'credit_history',
-                    'credit_score', 'loan_defaults']
+                    'loan_amount', 'loan_intent', 'loan_int_rate', 'credit_history', 'credit_score']
 
             df_inps = pd.DataFrame([inputs], columns=cols)
             print(df_inps)
@@ -98,10 +94,8 @@ def input():
             df_inps['education'] = model_dict['education'].transform(df_inps['education'])
             df_inps['home_ownership'] = model_dict['home_ownership'].transform(df_inps['home_ownership'])
             df_inps['loan_intent'] = model_dict['loan_intent'].transform(df_inps['loan_intent'])
-            df_inps['loan_defaults'] = model_dict['loan_defaults'].transform(df_inps['loan_defaults'])
 
             df_scaled = model_dict['scaler'].transform(df_inps)
-            # pred = model_dict['model'].predict(df_scaled)
             pred = model_dict['model'].predict_proba(df_scaled)[0][1]
             pred_percent = round(pred*100)
 
@@ -145,4 +139,5 @@ def about():
     return render_template('about.html',active='about')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    app.run(debug=True)
+    # app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
