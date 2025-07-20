@@ -7,201 +7,194 @@
 <!-- Home Body -->
 {% block body %}
 <div id="input_container">
-  <h1>Your Details</h1>
-  <hr>
-  <div id="inp_box">
-    <div id="loan_images">
-      <img
-        src="{{url_for('static',filename='images/main_img_2.png')}}"
-        alt="Loan Input Page Images"
-      />
+<h1>Your Details</h1>
+<hr>
+<div id="inp_box">
+<div id="loan_images">
+  <img
+    src="{{url_for('static',filename='images/main_img_2.png')}}"
+    alt="Loan Input Page Images"
+  />
+</div>
+
+<!-- Input Stage 1 -->
+{% if show == 1 %}
+<form method="POST" action="{{ url_for('input', show=1) }}">
+  <div class="inputs i3" id="inp1">
+    <label for="name">Name</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      placeholder="Enter your name"
+      minlength="3"
+      maxlength="50"
+      value="{{ session.get('name', '') }}"
+      required
+    />
+
+    <label for="age">Age</label>
+    <input
+      type="number"
+      id="age"
+      name="age"
+      placeholder="Enter your age"
+      min="21"
+      max="80"
+      value="{{ session.get('age', '') }}"
+      required
+    />
+
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender" required>
+      <option value="">Select Gender</option>
+      <option value="Male" {% if session.get('gender') == 'Male' %}selected{% endif %}>Male</option>
+      <option value="Female" {% if session.get('gender') == 'Female' %}selected{% endif %}>Female</option>
+    </select>
+
+    <div class="btnbox">
+      <button type="submit" class="btn_like">Next</button>
     </div>
-
-    <!-- Input Stage 1 -->
-    {% if show == 1 %}
-    <form method="POST" action="{{ url_for('input', show=1) }}">
-      <div class="inputs" id="inp1">
-        <label for="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Enter your name"
-          minlength="3"
-          maxlength="50"
-          value="{{ session.get('name', '') }}"
-          required
-        />
-
-        <label for="age">Age</label>
-        <input
-          type="number"
-          id="age"
-          name="age"
-          placeholder="Enter your age"
-          min="21"
-          max="80"
-          value="{{ session.get('age', '') }}"
-          required
-        />
-
-        <label for="gender">Gender:</label>
-        <select id="gender" name="gender" required>
-          <option value="">Select Gender</option>
-          <option value="Male" {% if session.get('gender') == 'Male' %}selected{% endif %}>Male</option>
-          <option value="Female" {% if session.get('gender') == 'Female' %}selected{% endif %}>Female</option>
-        </select>
-
-        <label for="education">Education</label>
-        <select id="education" name="education" required>
-          <option value="">Select Education</option>
-          <option value="High School" {% if session.get('education') == 'High School' %}selected{% endif %}>High School</option>
-          <option value="Associate" {% if session.get('education') == 'Associate' %}selected{% endif %}>Associate</option>
-          <option value="Bachelor" {% if session.get('education') == 'Bachelor' %}selected{% endif %}>Bachelor</option>
-          <option value="Master" {% if session.get('education') == 'Master' %}selected{% endif %}>Master</option>
-          <option value="Doctorate" {% if session.get('education') == 'Doctorate' %}selected{% endif %}>Doctorate</option>
-        </select>
-
-        <div class="btnbox">
-          <button type="submit" class="btn_like">Next</button>
-        </div>
-      </div>
-    </form>
-    {% endif %}
-
-    <!-- Input Stage 2 -->
-    {% if show == 2 %}
-    <form method="POST" action="{{ url_for('input', show=2) }}">
-      <div class="inputs i3">
-        <label for="income">Income</label>
-        <input
-          type="number"
-          id="income"
-          name="income"
-          placeholder="Enter your annual income"
-          min="180000"
-          max="10000000"
-          value="{{ session.get('income', '') }}"
-          required
-        />
-
-        <label for="experience">Work Experience</label>
-        <input
-          type="number"
-          id="experience"
-          name="experience"
-          placeholder="Enter total years of experience"
-          min="1"
-          max="50"
-          value="{{ session.get('experience', '') }}"
-          required
-        />
-
-        <label for="home_ownership">Home Ownership:</label>
-        <select id="home_ownership" name="home_ownership" required>
-          <option value="">Select Ownership Type</option>
-          <option value="Rent" {% if session.get('home_ownership') == 'Rent' %}selected{% endif %}>Rent</option>
-          <option value="Mortgage" {% if session.get('home_ownership') == 'Mortgage' %}selected{% endif %}>Mortgage</option>
-          <option value="Own" {% if session.get('home_ownership') == 'Own' %}selected{% endif %}>Own</option>
-        </select>
-
-        <div class="btnbox">
-          <a href="{{ url_for('input', show=1) }}" class="btn_like">Back</a>
-          <button type="submit" class="btn_like">Next</button>
-        </div>
-      </div>
-    </form>
-    {% endif %}
-
-    <!-- Input Stage 3 -->
-    {% if show == 3 %}
-    <form method="POST" action="{{ url_for('input', show=3) }}">
-      <div class="inputs i3">
-        <label for="loan_amount">Loan Amount</label>
-        <input
-          type="number"
-          id="loan_amount"
-          name="loan_amount"
-          placeholder="Enter the loan amount"
-          min="40000"
-          max="3000000"
-          value="{{ session.get('loan_amount', '') }}"
-          required
-        />
-
-        <label for="loan_intent">Loan Purpose:</label>
-        <select id="loan_intent" name="loan_intent" required>
-          <option value="">Select Purpose</option>
-          <option value="Education" {% if session.get('loan_intent') == 'Education' %}selected{% endif %}>Education</option>
-          <option value="Medical" {% if session.get('loan_intent') == 'Medical' %}selected{% endif %}>Medical</option>
-          <option value="Homeimprovement" {% if session.get('loan_intent') == 'Homeimprovement' %}selected{% endif %}>Home Improvement</option>
-          <option value="Personal" {% if session.get('loan_intent') == 'Personal' %}selected{% endif %}>Personal</option>
-          <option value="Debtconsolidation" {% if session.get('loan_intent') == 'Debtconsolidation' %}selected{% endif %}>Debt Consolidation</option>
-        </select>
-
-        <label for="interest">Interest Rate</label>
-        <input
-          type="number"
-          id="interest"
-          name="interest"
-          placeholder="Enter the interest rate"
-          min="5"
-          max="20"
-          value="{{ session.get('interest', '') }}"
-          required
-        />
-
-        <div class="btnbox">
-          <a href="{{ url_for('input', show=2) }}" class="btn_like">Back</a>
-          <button type="submit" class="btn_like">Next</button>
-        </div>
-      </div>
-    </form>
-    {% endif %}
-
-    <!-- Input Stage 4 -->
-    {% if show == 4 %}
-    <form method="POST" action="{{ url_for('input', show=4) }}">
-      <div class="inputs i3">
-        <label for="credit_history">Credit History</label>
-        <input
-          type="number"
-          id="credit_history"
-          name="credit_history"
-          placeholder="Enter credit history in years"
-          min="1"
-          max="30"
-          value="{{ session.get('credit_history', '') }}"
-          required
-        />
-
-        <label for="credit_score">Credit Score</label>
-        <input
-          type="number"
-          id="credit_score"
-          name="credit_score"
-          placeholder="Enter your credit score"
-          min="350"
-          max="900"
-          value="{{ session.get('credit_score', '') }}"
-          required
-        />
-
-        <label for="loan_defaults">Loan Defaults</label>
-        <select id="loan_defaults" name="loan_defaults" required>
-          <option value="">Select Loan Defaults</option>
-          <option value="No" {% if session.get('loan_defaults') == 'No' %}selected{% endif %}>No</option>
-          <option value="Yes" {% if session.get('loan_defaults') == 'Yes' %}selected{% endif %}>Yes</option>
-        </select>
-
-        <div class="btnbox">
-          <a href="{{ url_for('input', show=3) }}" class="btn_like">Back</a>
-          <button type="submit">Submit</button>
-        </div>
-      </div>
-    </form>
-    {% endif %}
-
   </div>
+</form>
+{% endif %}
+
+<!-- Input Stage 2 -->
+{% if show == 2 %}
+<form method="POST" action="{{ url_for('input', show=2) }}">
+  <div class="inputs i3">
+    <label for="education">Education</label>
+    <select id="education" name="education" required>
+      <option value="">Select Education</option>
+      <option value="High School" {% if session.get('education') == 'High School' %}selected{% endif %}>High School</option>
+      <option value="Associate" {% if session.get('education') == 'Associate' %}selected{% endif %}>Associate</option>
+      <option value="Bachelor" {% if session.get('education') == 'Bachelor' %}selected{% endif %}>Bachelor</option>
+      <option value="Master" {% if session.get('education') == 'Master' %}selected{% endif %}>Master</option>
+      <option value="Doctorate" {% if session.get('education') == 'Doctorate' %}selected{% endif %}>Doctorate</option>
+    </select>
+
+    <label for="income">Income</label>
+    <input
+      type="number"
+      id="income"
+      name="income"
+      placeholder="Enter your annual income"
+      min="180000"
+      max="10000000"
+      value="{{ session.get('income', '') }}"
+      required
+    />
+
+    <label for="experience">Work Experience</label>
+    <input
+      type="number"
+      id="experience"
+      name="experience"
+      placeholder="Enter total years of experience"
+      min="0"
+      max="50"
+      value="{{ session.get('experience', '') }}"
+      required
+    />
+
+    <div class="btnbox">
+      <a href="{{ url_for('input', show=1) }}" class="btn_like">Back</a>
+      <button type="submit" class="btn_like">Next</button>
+    </div>
+  </div>
+</form>
+{% endif %}
+
+<!-- Input Stage 3 -->
+{% if show == 3 %}
+<form method="POST" action="{{ url_for('input', show=3) }}">
+  <div class="inputs i3">
+    <label for="loan_amount">Loan Amount</label>
+    <input
+      type="number"
+      id="loan_amount"
+      name="loan_amount"
+      placeholder="Enter the loan amount"
+      min="40000"
+      max="3000000"
+      value="{{ session.get('loan_amount', '') }}"
+      required
+    />
+
+    <label for="loan_intent">Loan Purpose:</label>
+    <select id="loan_intent" name="loan_intent" required>
+      <option value="">Select Purpose</option>
+      <option value="Education" {% if session.get('loan_intent') == 'Education' %}selected{% endif %}>Education</option>
+      <option value="Medical" {% if session.get('loan_intent') == 'Medical' %}selected{% endif %}>Medical</option>
+      <option value="Homeimprovement" {% if session.get('loan_intent') == 'Homeimprovement' %}selected{% endif %}>Home Improvement</option>
+      <option value="Personal" {% if session.get('loan_intent') == 'Personal' %}selected{% endif %}>Personal</option>
+      <option value="Debtconsolidation" {% if session.get('loan_intent') == 'Debtconsolidation' %}selected{% endif %}>Debt Consolidation</option>
+    </select>
+
+    <label for="interest">Interest Rate</label>
+    <input
+      type="number"
+      id="interest"
+      name="interest"
+      placeholder="Enter the interest rate"
+      min="5"
+      max="20"
+      value="{{ session.get('interest', '') }}"
+      required
+    />
+
+    <div class="btnbox">
+      <a href="{{ url_for('input', show=2) }}" class="btn_like">Back</a>
+      <button type="submit" class="btn_like">Next</button>
+    </div>
+  </div>
+</form>
+{% endif %}
+
+<!-- Input Stage 4 -->
+{% if show == 4 %}
+<form method="POST" action="{{ url_for('input', show=4) }}">
+  <div class="inputs i3">
+    <label for="home_ownership">Home Ownership:</label>
+    <select id="home_ownership" name="home_ownership" required>
+      <option value="">Select Ownership Type</option>
+      <option value="Rent" {% if session.get('home_ownership') == 'Rent' %}selected{% endif %}>Rent</option>
+      <option value="Mortgage" {% if session.get('home_ownership') == 'Mortgage' %}selected{% endif %}>Mortgage</option>
+      <option value="Own" {% if session.get('home_ownership') == 'Own' %}selected{% endif %}>Own</option>
+    </select>
+
+    <label for="credit_history">Credit History</label>
+    <input
+      type="number"
+      id="credit_history"
+      name="credit_history"
+      placeholder="Enter credit history in years"
+      min="1"
+      max="30"
+      value="{{ session.get('credit_history', '') }}"
+      required
+    />
+
+    <label for="credit_score">Credit Score</label>
+    <input
+      type="number"
+      id="credit_score"
+      name="credit_score"
+      placeholder="Enter your credit score"
+      min="350"
+      max="900"
+      value="{{ session.get('credit_score', '') }}"
+      required
+    />
+
+    <div class="btnbox">
+      <a href="{{ url_for('input', show=3) }}" class="btn_like">Back</a>
+      <button type="submit">Submit</button>
+    </div>
+  </div>
+</form>
+{% endif %}
+
+</div>
 </div>
 {% endblock body %}
